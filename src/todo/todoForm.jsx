@@ -39,7 +39,7 @@ class TodoForm extends Component {
                 </Grid>
                 <Grid cols="12 3 2">
                     <IconButton style="primary" icon="plus" onClick={() => add(description)} />
-                    <IconButton style="info" icon="search" onClick={() => search() } />
+                    <IconButton style="info" icon="search" onClick={search} />
                     <IconButton style="defult" icon="close" onClick={clear} />
                 </Grid>
             </div>
@@ -48,6 +48,6 @@ class TodoForm extends Component {
 }
 
 const mapStateToProps = state => ({ description: state.todo.description })
-const mapDespatchToProps = dispatch => bindActionCreators({ changeDescription, search, add, clear }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ changeDescription, search, add, clear }, dispatch)
 
-export default connect(mapStateToProps, mapDespatchToProps)(TodoForm)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)

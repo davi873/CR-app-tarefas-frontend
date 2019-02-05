@@ -8,13 +8,16 @@ export const changeDescription = (e) => ({
 })
 
 export const search = () => {
-    const result = axios.get(`${URL}?sort=-createdAt`)
-    return(
-        {
+    return (dispatch, getState) => {
+        const description = getState().todo.description
+        const search = description ? `&description__regex=/${description}/` : ''
+        console.log(search)
+        axios.get(`${URL}?sort=-createdAt${search}`)
+        .then(result => dispatch({
             type: "TODO_SEARCHED",
-            payload: result
-        }
-    )
+            payload: result.data
+        }))
+    }
 }
 
 export const add = (description) => {
@@ -49,5 +52,5 @@ export const markedAsPending = (todo) => {
 }
 
 export const clear = () => {
-    return {type: "TODO_CLEAR"}
+    return [{type: "TODO_CLEAR"}, search()]
 }
