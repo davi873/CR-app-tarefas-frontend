@@ -20,7 +20,7 @@ export const search = () => {
 export const add = (description) => {
     return dispatch => {
         axios.post(URL, { description })
-        .then(result => dispatch({ type: "TODO_ADDED", payload: result.data }))
+        .then(result => dispatch(clear()))
         .then(result => dispatch(search()))
     }
 }
@@ -37,4 +37,17 @@ export const markedAsDone = (todo) => {
         axios.put(URL + todo._id, { ...todo, done: true })
         .then(result => dispatch(search()))
     }
+}
+
+export const markedAsPending = (todo) => {
+    return (
+        dispatch => {
+            axios.put(URL + todo._id, { ...todo, done: false })
+            .then(result => dispatch(search()))
+        }
+    )
+}
+
+export const clear = () => {
+    return {type: "TODO_CLEAR"}
 }
